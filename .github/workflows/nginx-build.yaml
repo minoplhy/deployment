@@ -19,6 +19,13 @@ jobs:
           echo "NGINX_TAG=${NGINX_TAG}" >> $GITHUB_ENV
           echo "NGINX_TAG=${NGINX_TAG}"
           
-#      - name: Run Nginx Build
-#        run: |
-#          curl https://raw.githubusercontent.com/minoplhy/scriptbox/main/nginx_build_script/build.sh | bash -s -- --nginx-tag={$Nginx_Tag}
+      - name: Run Nginx Build
+        run: |
+          curl https://raw.githubusercontent.com/minoplhy/scriptbox/main/nginx_build_script/build.sh | bash -s -- --nginx-tag={$NGINX_TAG} -nl -nm
+          tar czvf nginx-${NGINX_TAG}.tar.gz ~/nginx_scriptbox/nginx/objs
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: nginx-${NGINX_TAG}.tar.gz
