@@ -1,0 +1,24 @@
+name: Nginx Mega Build
+run-name: Nginx Build
+on:
+  push:
+    tags:        
+      - nginx-*
+jobs:
+  build_nginx:
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
+      - name: Set up environment variables
+        run: |
+          TAG_NAME=${GITHUB_REF##*/}
+          NGINX_TAG=${TAG_NAME#nginx-}
+          
+          echo "NGINX_TAG=${NGINX_TAG}" >> $GITHUB_ENV
+          echo "NGINX_TAG=${NGINX_TAG}"
+          
+#      - name: Run Nginx Build
+#        run: |
+#          curl https://raw.githubusercontent.com/minoplhy/scriptbox/main/nginx_build_script/build.sh | bash -s -- --nginx-tag={$Nginx_Tag}
