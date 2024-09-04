@@ -29,7 +29,7 @@ jobs:
         run: |
           echo "This Task will be run using the following tag: ${NGINX_TAG}"
           curl https://raw.githubusercontent.com/minoplhy/scriptbox/main/nginx_build_script/build.sh | bash -s -- --nginx-tag=${NGINX_TAG}
-          tar czvf nginx-${NGINX_TAG}-allstar.tar.gz ~/nginx_scriptbox/nginx/objs /var/lib/modsecurity /opt/nginx-lua-module /usr/local/lua
+          tar czvf nginx-${NGINX_TAG}-allstar.tar.gz ~/nginx_scriptbox/nginx/objs /opt/nginx-lua-module /usr/local/lua /usr/local/modsecurity
           
       - name: Release
         uses: softprops/action-gh-release@v2
