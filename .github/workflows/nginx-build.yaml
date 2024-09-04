@@ -21,7 +21,8 @@ jobs:
           
       - name: Run Nginx Build
         run: |
-          curl https://raw.githubusercontent.com/minoplhy/scriptbox/main/nginx_build_script/build.sh | bash -s -- --nginx-tag={$NGINX_TAG} -nl -nm
+          echo "This Task will be run using the following tag: ${NGINX_TAG}"
+          curl https://raw.githubusercontent.com/minoplhy/scriptbox/main/nginx_build_script/build.sh | bash -s -- --nginx-tag=${NGINX_TAG} -nl -nm
           tar czvf nginx-${NGINX_TAG}.tar.gz ~/nginx_scriptbox/nginx/objs
 
       - name: Release
