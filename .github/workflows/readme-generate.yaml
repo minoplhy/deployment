@@ -9,31 +9,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.DEPLOYMENT_TOKEN }}
+          
+      - name: Generate README.md
+        run: |
+          README_FILE="README.md"
+          releases=$(curl -s "https://api.github.com/repos/minoplhy/deployment/releases")
 
-    - name: Generate README.md
-      run: |
-        README_FILE="README.md"
-        releases=$(curl -s "https://api.github.com/repos/minoplhy/deployment/releases")
+          echo "# Nginx Releases" > $README_FILE
+          echo "" >> $README_FILE
+          echo "| RELEASE TAG | URL |" >> $README_FILE
+          echo "|--------------|-----------------|" >> $README_FILE
 
-        echo "# Nginx Releases" > $README_FILE
-        echo "" >> $README_FILE
-        echo "| RELEASE TAG | URL |" >> $README_FILE
-        echo "|--------------|-----------------|" >> $README_FILE
-
-        echo "$releases" | jq -r '.[] | "| \(.name) | [Link](\(.html_url)) |"' >> $README_FILE
+          echo "$releases" | jq -r '.[] | "| \(.name) | [Link](\(.html_url)) |"' >> $README_FILE
         
-    - name: Set Commit Timestamp
-      run: |
-        TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
-        echo "TIMESTAMP=${TIMESTAMP}" >> $GITHUB_ENV
+      - name: Set Commit Timestamp
+        run: |
+          TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          echo "TIMESTAMP=${TIMESTAMP}" >> $GITHUB_ENV
         
-    - name: Commit and push README changes
-      if: success()
-      uses: EndBug/add-and-commit@v9
-      with:
-        add: 'README.md'
-        message: '[Actions] Generate Readme.md ${{ env.TIMESTAMP }}'
-        author_name: 'GitHub Actions'
-        author_email: 'hubr@3qx.nl'
+      - name: Commit and push README changes
+        if: success()
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: 'README.md'
+          message: '[Actions] Generate Readme.md ${{ env.TIMESTAMP }}'
+          author_name: 'GitHub Actions'
+          author_email: 'hubr@3qx.nl'
