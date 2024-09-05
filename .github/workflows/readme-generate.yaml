@@ -19,6 +19,7 @@ jobs:
           README_FILE="README.md"
           releases=$(curl -s "https://api.github.com/repos/minoplhy/deployment/releases")
 
+          # Create new File
           echo "# Nginx Releases" > $README_FILE
           echo "" >> $README_FILE
           echo "| RELEASE TAG | URL |" >> $README_FILE
@@ -29,7 +30,8 @@ jobs:
             echo "$nginx_releases" >> $README_FILE
           fi        
 
-          echo "# Gitea Releases" > $README_FILE
+          # Append old file
+          echo "# Gitea Releases" >> $README_FILE
           echo "" >> $README_FILE
           echo "| RELEASE TAG | URL |" >> $README_FILE
           echo "|--------------|-----------------|" >> $README_FILE
