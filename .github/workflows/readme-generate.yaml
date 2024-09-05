@@ -24,8 +24,21 @@ jobs:
           echo "| RELEASE TAG | URL |" >> $README_FILE
           echo "|--------------|-----------------|" >> $README_FILE
 
-          echo "$releases" | jq -r '.[] | "| \(.name) | [Link](\(.html_url)) |"' >> $README_FILE
-        
+          nginx_releases=$(echo "$releases" | jq -r '.[] | select(.name | startswith("nginx-")) | "| \(.name) | [Link](\(.html_url)) |"')
+          if [ -n "$nginx_releases" ]; then
+            echo "$nginx_releases" >> $README_FILE
+          fi        
+
+          echo "# Gitea Releases" > $README_FILE
+          echo "" >> $README_FILE
+          echo "| RELEASE TAG | URL |" >> $README_FILE
+          echo "|--------------|-----------------|" >> $README_FILE
+
+          gitea_releases=$(echo "$releases" | jq -r '.[] | select(.name | startswith("gitea-")) | "| \(.name) | [Link](\(.html_url)) |"')
+          if [ -n "$gitea_releases" ]; then
+            echo "$gitea_releases" >> $README_FILE
+          fi     
+          
       - name: Set Commit Timestamp
         run: |
           TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
