@@ -27,7 +27,7 @@ jobs:
       - name: Run Gitea Build (static)
         run: |
           echo "This Task will be run using the following tag: ${GITEA_TAG}"
-          curl -L https://github.com/minoplhy/scriptbox/raw/main/build_gitea/Linux/build.sh | bash -s -- --git-tag "${GITEA_TAG} --static"   
+          curl -L https://github.com/minoplhy/scriptbox/raw/main/build_gitea/Linux/build.sh | bash -s -- --git-tag "${GITEA_TAG}" --static   
           
       - name: Zip Package
         run: |
