@@ -18,20 +18,30 @@ jobs:
           
           echo "GITEA_TAG=${GITEA_TAG}" >> $GITHUB_ENV
           echo "GITEA_TAG=${GITEA_TAG}"
+
+      - name: Setup Package Directory
+        run: |
+          sudo mkdir -p /gitea-${GITEA_TAG}
           
       - name: Run Gitea Build (binary)
         run: |
           echo "This Task will be run using the following tag: ${GITEA_TAG}"
           curl -L https://github.com/minoplhy/scriptbox/raw/main/build_gitea/Linux/build.sh | bash -s -- --git-tag "${GITEA_TAG}"          
-
+          
+          # Copy gitea to package directory(this is due to a broken mechanism in origin script)
+          sudo cp ~/gitea-binaries/gitea /gitea-${GITEA_TAG}/gitea
+          
       - name: Run Gitea Build (static)
         run: |
           echo "This Task will be run using the following tag: ${GITEA_TAG}"
           curl -L https://github.com/minoplhy/scriptbox/raw/main/build_gitea/Linux/build.sh | bash -s -- --git-tag "${GITEA_TAG}" --static   
+
+          # Copy gitea to package directory(this is due to a broken mechanism in origin script)
+          sudo cp -r ~/gitea-binaries/gitea-static /gitea-${GITEA_TAG}/gitea-static
           
       - name: Zip Package
         run: |
-          tar czvf gitea-${GITEA_TAG}.tar.gz ~/gitea-binaries/
+          sudo tar czvf gitea-${GITEA_TAG}.tar.gz /gitea-${GITEA_TAG}
 
       - name: Release
         uses: softprops/action-gh-release@v2
