@@ -1,0 +1,43 @@
+name: Gitea Mega Build
+run-name: Gitea Build
+on:
+  push:
+    tags:        
+      - gitea-*
+jobs:
+  build_gitea:
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Set up environment variables
+        run: |
+          TAG_NAME=${GITHUB_REF##*/}
+          GITEA_TAG=${TAG_NAME#gitea-}
+          
+          echo "GITEA_TAG=${GITEA_TAG}" >> $GITHUB_ENV
+          echo "GITEA_TAG=${GITEA_TAG}"
+          
+      - name: Run Gitea Build (binary)
+        run: |
+          echo "This Task will be run using the following tag: ${GITEA_TAG}"
+          curl -L https://github.com/minoplhy/scriptbox/raw/main/build_gitea/Linux/build.sh | bash -s -- --git-tag "${GITEA_TAG}"          
+
+      - name: Run Gitea Build (static)
+        run: |
+          echo "This Task will be run using the following tag: ${GITEA_TAG}"
+          curl -L https://github.com/minoplhy/scriptbox/raw/main/build_gitea/Linux/build.sh | bash -s -- --git-tag "${GITEA_TAG} --static"   
+          
+      - name: Zip Package
+        run: |
+          tar czvf gitea-${GITEA_TAG}.tar.gz ~/gitea-binaries/
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          body: |
+            "Gitea Successfully build on -> ${{ env.GITEA_TAG }}"
+          token: ${{ secrets.DEPLOYMENT_TOKEN }}
+          files: gitea-*.tar.gz
