@@ -31,6 +31,16 @@ jobs:
           fi        
 
           # Append old file
+          echo "# freenginx Releases" >> $README_FILE
+          echo "" >> $README_FILE
+          echo "| RELEASE TAG | URL |" >> $README_FILE
+          echo "|--------------|-----------------|" >> $README_FILE
+
+          freenginx_releases=$(echo "$releases" | jq -r '.[] | select(.name | startswith("freenginx-")) | "| \(.name) | [Link](\(.html_url)) |"')
+          if [ -n "$freenginx_releases" ]; then
+            echo "$freenginx_releases" >> $README_FILE
+          fi     
+          
           echo "# Gitea Releases" >> $README_FILE
           echo "" >> $README_FILE
           echo "| RELEASE TAG | URL |" >> $README_FILE
