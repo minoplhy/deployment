@@ -3,7 +3,7 @@ run-name: Nginx Build
 on:
   push:
     tags:        
-      - nginx-*
+      - freenginx-*
 jobs:
   build_nginx:
     runs-on: [ubuntu-latest]
