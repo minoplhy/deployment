@@ -48,6 +48,6 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           body: |
-            "Nginx Successfully build on -> ${{ env.NGINX_TAG }}"
+            "freenginx Successfully build on -> ${{ env.NGINX_TAG }}"
           token: ${{ secrets.DEPLOYMENT_TOKEN }}
           files: nginx-*.tar.gz
