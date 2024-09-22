@@ -14,7 +14,7 @@ jobs:
       - name: Set up environment variables
         run: |
           TAG_NAME=${GITHUB_REF##*/}
-          NGINX_TAG=${TAG_NAME#nginx-}
+          NGINX_TAG=${TAG_NAME#freenginx-}
           
           echo "NGINX_TAG=${NGINX_TAG}" >> $GITHUB_ENV
           echo "NGINX_TAG=${NGINX_TAG}"
