@@ -22,25 +22,25 @@ jobs:
       - name: Run Nginx Build (Vanilla)
         run: |
           echo "This Task will be run using the following tag: ${NGINX_TAG}"
-          curl https://raw.githubusercontent.com/minoplhy/scriptbox/main/nginx_build_script/build.sh | bash -s -- --nginx-tag=${NGINX_TAG} -nl -nm
+          curl https://raw.githubusercontent.com/minoplhy/scriptbox/main/nginx_build_script/build.sh | bash -s -- --nginx-tag=${NGINX_TAG} --no-lua --no-modsecurity --type=nginx
           tar czvf nginx-${NGINX_TAG}-vanilla.tar.gz ~/nginx_scriptbox/nginx/objs
 
       - name: Run Nginx Build (All Star)
         run: |
           echo "This Task will be run using the following tag: ${NGINX_TAG}"
-          curl https://raw.githubusercontent.com/minoplhy/scriptbox/main/nginx_build_script/build.sh | bash -s -- --nginx-tag=${NGINX_TAG}
+          curl https://raw.githubusercontent.com/minoplhy/scriptbox/main/nginx_build_script/build.sh | bash -s -- --nginx-tag=${NGINX_TAG} --type=nginx
           tar czvf nginx-${NGINX_TAG}-allstar.tar.gz ~/nginx_scriptbox/nginx/objs /opt/nginx-lua-module /usr/local/lua /usr/local/modsecurity
         
       - name: Run Nginx Build (Lua)
         run: |
           echo "This Task will be run using the following tag: ${NGINX_TAG}"
-          curl https://raw.githubusercontent.com/minoplhy/scriptbox/main/nginx_build_script/build.sh | bash -s -- --nginx-tag=${NGINX_TAG} --no-modsecurity 
+          curl https://raw.githubusercontent.com/minoplhy/scriptbox/main/nginx_build_script/build.sh | bash -s -- --nginx-tag=${NGINX_TAG} --no-modsecurity --type=nginx
           tar czvf nginx-${NGINX_TAG}-lua.tar.gz ~/nginx_scriptbox/nginx/objs /opt/nginx-lua-module /usr/local/lua
 
       - name: Run Nginx Build (ModSecurity)
         run: |
           echo "This Task will be run using the following tag: ${NGINX_TAG}"
-          curl https://raw.githubusercontent.com/minoplhy/scriptbox/main/nginx_build_script/build.sh | bash -s -- --nginx-tag=${NGINX_TAG} --no-lua 
+          curl https://raw.githubusercontent.com/minoplhy/scriptbox/main/nginx_build_script/build.sh | bash -s -- --nginx-tag=${NGINX_TAG} --no-lua --type=nginx
           tar czvf nginx-${NGINX_TAG}-modsecurity.tar.gz ~/nginx_scriptbox/nginx/objs /usr/local/modsecurity
           
       - name: Release
