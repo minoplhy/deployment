@@ -1,5 +1,5 @@
-name: Nginx Mega Build
-run-name: Nginx Build
+name: freenginx Mega Build
+run-name: freenginx Build
 on:
   push:
     tags:        
