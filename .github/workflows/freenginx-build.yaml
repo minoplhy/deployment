@@ -31,6 +31,8 @@ jobs:
           echo "OPTIONS=${OPTIONS[*]}" >> $GITHUB_ENV
       - name: Run freenginx Builds
         run: |
+          #!/bin/bash
+          
           echo "This Task will be run using the following tag: ${NGINX_TAG}"
           
           for i in ${!TAGS[@]}; do
