@@ -19,20 +19,21 @@ jobs:
           echo "NGINX_TAG=${NGINX_TAG}" >> $GITHUB_ENV
           echo "NGINX_TAG=${NGINX_TAG}"
 
-          TAGS=("vanilla" "allstar" "lua" "modsecurity")
-          OPTIONS=(
-            "--type=nginx"
-            "--lua --modsecurity --type=nginx"
-            "--lua --type=nginx"
-            "--modsecurity --type=nginx"
-          )
-          
-          echo "TAGS=${TAGS[*]}" >> $GITHUB_ENV
-          echo "OPTIONS=${OPTIONS[*]}" >> $GITHUB_ENV
       - name: Run nginx Builds
         run: |
+          TAGS=("vanilla" "allstar" "lua" "modsecurity")
+          OPTIONS=(
+            "--type=freenginx"
+            "--lua --modsecurity --type=freenginx"
+            "--lua --type=freenginx"
+            "--modsecurity --type=freenginx"
+          )
+
           for i in ${!TAGS[@]}; do
             echo "This Task will be run using the following tag: ${NGINX_TAG}"
+            echo "This Task will be run using the following version: ${TAGS[$i]}"
+            echo "This Task will be run using the following options: ${OPTIONS[$i]}"
+            
             curl https://raw.githubusercontent.com/minoplhy/scriptbox/main/nginx_build_script/build.sh | bash -s -- --nginx-tag=${NGINX_TAG} ${OPTIONS[$i]}
           
             # Prepare tar file paths

@@ -19,6 +19,9 @@ jobs:
           echo "NGINX_TAG=${NGINX_TAG}" >> $GITHUB_ENV
           echo "NGINX_TAG=${NGINX_TAG}"
 
+      - name: Run freenginx Builds
+        run: |
+          #!/bin/bash
           TAGS=("vanilla" "allstar" "lua" "modsecurity")
           OPTIONS=(
             "--type=freenginx"
@@ -27,15 +30,8 @@ jobs:
             "--modsecurity --type=freenginx"
           )
           
-          echo "TAGS=${TAGS[*]}" >> $GITHUB_ENV
-          echo "OPTIONS=${OPTIONS[*]}" >> $GITHUB_ENV
-      - name: Run freenginx Builds
-        run: |
-          #!/bin/bash
-          
-          echo "This Task will be run using the following tag: ${NGINX_TAG}"
-          
           for i in ${!TAGS[@]}; do
+            echo "This Task will be run using the following tag: ${NGINX_TAG}"
             echo "This Task will be run using the following version: ${TAGS[$i]}"
             echo "This Task will be run using the following options: ${OPTIONS[$i]}"
 
