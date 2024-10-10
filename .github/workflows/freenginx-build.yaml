@@ -31,8 +31,12 @@ jobs:
           echo "OPTIONS=${OPTIONS[*]}" >> $GITHUB_ENV
       - name: Run freenginx Builds
         run: |
+          echo "This Task will be run using the following tag: ${NGINX_TAG}"
+          
           for i in ${!TAGS[@]}; do
-            echo "This Task will be run using the following tag: ${NGINX_TAG}"
+            echo "This Task will be run using the following version: ${TAGS[$i]}"
+            echo "This Task will be run using the following options: ${OPTIONS[$i]}"
+
             curl https://raw.githubusercontent.com/minoplhy/scriptbox/main/nginx_build_script/build.sh | bash -s -- --nginx-tag=${NGINX_TAG} ${OPTIONS[$i]}
           
             # Prepare tar file paths
