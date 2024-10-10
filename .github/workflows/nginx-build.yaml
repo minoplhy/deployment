@@ -23,10 +23,10 @@ jobs:
         run: |
           TAGS=("vanilla" "allstar" "lua" "modsecurity")
           OPTIONS=(
-            "--type=freenginx"
-            "--lua --modsecurity --type=freenginx"
-            "--lua --type=freenginx"
-            "--modsecurity --type=freenginx"
+            "--type=nginx"
+            "--lua --modsecurity --type=nginx"
+            "--lua --type=nginx"
+            "--modsecurity --type=nginx"
           )
 
           for i in ${!TAGS[@]}; do
