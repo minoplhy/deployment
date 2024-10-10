@@ -22,7 +22,7 @@ jobs:
           TAGS=("vanilla" "allstar" "lua" "modsecurity")
           OPTIONS=(
             "--type=nginx"
-            "--lua --type=nginx"
+            "--lua --modsecurity --type=nginx"
             "--lua --type=nginx"
             "--modsecurity --type=nginx"
           )

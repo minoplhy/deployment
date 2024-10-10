@@ -22,7 +22,7 @@ jobs:
           TAGS=("vanilla" "allstar" "lua" "modsecurity")
           OPTIONS=(
             "--type=freenginx"
-            "--lua --type=freenginx"
+            "--lua --modsecurity --type=freenginx"
             "--lua --type=freenginx"
             "--modsecurity --type=freenginx"
           )
