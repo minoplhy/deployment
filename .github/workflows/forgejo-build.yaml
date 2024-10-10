@@ -21,7 +21,7 @@ jobs:
 
       - name: Setup Package Directory
         run: |
-          sudo mkdir -p /gitea-${GITEA_TAG}
+          sudo mkdir -p /forgejo-${GITEA_TAG}
           
       - name: Run forgejo Build (binary + static)
         run: |
