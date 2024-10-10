@@ -1,8 +1,6 @@
 name: Generate README.md
 run-name: Generate README.md
 on:
-  schedule:
-   - cron: '0 0 * * *'
   workflow_dispatch:
 jobs:
   generate-readme:
@@ -49,7 +47,17 @@ jobs:
           gitea_releases=$(echo "$releases" | jq -r '.[] | select(.name | startswith("gitea-")) | "| \(.name) | [Link](\(.html_url)) |"')
           if [ -n "$gitea_releases" ]; then
             echo "$gitea_releases" >> $README_FILE
-          fi     
+          fi    
+
+          echo "# forgejo Releases" >> $README_FILE
+          echo "" >> $README_FILE
+          echo "| RELEASE TAG | URL |" >> $README_FILE
+          echo "|--------------|-----------------|" >> $README_FILE
+
+          forgejo_releases=$(echo "$releases" | jq -r '.[] | select(.name | startswith("forgejo-")) | "| \(.name) | [Link](\(.html_url)) |"')
+          if [ -n "$forgejo_releases" ]; then
+            echo "$forgejo_releases" >> $README_FILE
+          fi    
           
       - name: Set Commit Timestamp
         run: |
