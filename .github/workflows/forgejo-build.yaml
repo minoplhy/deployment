@@ -1,11 +1,11 @@
-name: Gitea Mega Build
-run-name: Gitea Build
+name: forgejo Mega Build
+run-name: forgejo Build
 on:
   push:
     tags:        
-      - gitea-*
+      - forgejo-*
 jobs:
-  build_gitea:
+  build_forgejo:
     runs-on: [ubuntu-latest]
     steps:
       - name: Checkout repository
@@ -14,7 +14,7 @@ jobs:
       - name: Set up environment variables
         run: |
           TAG_NAME=${GITHUB_REF##*/}
-          GITEA_TAG=${TAG_NAME#gitea-}
+          GITEA_TAG=${TAG_NAME#forgejo-}
           
           echo "GITEA_TAG=${GITEA_TAG}" >> $GITHUB_ENV
           echo "GITEA_TAG=${GITEA_TAG}"
@@ -23,24 +23,24 @@ jobs:
         run: |
           sudo mkdir -p /gitea-${GITEA_TAG}
           
-      - name: Run Gitea Build (binary + static)
+      - name: Run forgejo Build (binary + static)
         run: |
           echo "This Task will be run using the following tag: ${GITEA_TAG}"
-          curl -L https://github.com/minoplhy/scriptbox/raw/main/build_gitea/Linux/build.sh | bash -s -- --git-tag "${GITEA_TAG}" --static --type=gitea
+          curl -L https://github.com/minoplhy/scriptbox/raw/main/build_gitea/Linux/build.sh | bash -s -- --git-tag "${GITEA_TAG}" --static --type=forgejo
           
-          # Copy gitea to package directory(this is due to a broken mechanism in origin script)
-          sudo cp ~/gitea-binaries/gitea /gitea-${GITEA_TAG}/gitea
-          sudo cp -r ~/gitea-binaries/gitea-static /gitea-${GITEA_TAG}/gitea-static
+          # Copy forgejo to package directory(this is due to a broken mechanism in origin script)
+          sudo cp ~/gitea-binaries/gitea /forgejo-${GITEA_TAG}/gitea
+          sudo cp -r ~/gitea-binaries/gitea-static /forgejo-${GITEA_TAG}/gitea-static
           
       - name: Zip Package
         run: |
-          sudo tar czvf gitea-${GITEA_TAG}.tar.gz /gitea-${GITEA_TAG}
+          sudo tar czvf forgejo-${GITEA_TAG}.tar.gz /forgejo-${GITEA_TAG}
 
       - name: Release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
           body: |
-            "Gitea Successfully build on -> ${{ env.GITEA_TAG }}"
+            "forgejo Successfully build on -> ${{ env.GITEA_TAG }}"
           token: ${{ secrets.DEPLOYMENT_TOKEN }}
-          files: gitea-*.tar.gz
+          files: forgejo-*.tar.gz
