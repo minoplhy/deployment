@@ -24,4 +24,5 @@
 
 | RELEASE TAG | URL |
 |--------------|-----------------|
+| forgejo-v9.0.0 | [Link](https://github.com/minoplhy/deployment/releases/tag/forgejo-v9.0.0) |
 | forgejo-v8.0.3 | [Link](https://github.com/minoplhy/deployment/releases/tag/forgejo-v8.0.3) |
