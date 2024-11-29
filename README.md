@@ -2,6 +2,7 @@
 
 | RELEASE TAG | URL |
 |--------------|-----------------|
+| nginx-release-1.27.3 | [Link](https://github.com/minoplhy/deployment/releases/tag/nginx-release-1.27.3) |
 | nginx-release-1.27.2 | [Link](https://github.com/minoplhy/deployment/releases/tag/nginx-release-1.27.2) |
 | nginx-release-1.27.0 | [Link](https://github.com/minoplhy/deployment/releases/tag/nginx-release-1.27.0) |
 | nginx-release-1.26.2 | [Link](https://github.com/minoplhy/deployment/releases/tag/nginx-release-1.26.2) |
@@ -24,5 +25,6 @@
 
 | RELEASE TAG | URL |
 |--------------|-----------------|
+| forgejo-v9.0.2 | [Link](https://github.com/minoplhy/deployment/releases/tag/forgejo-v9.0.2) |
 | forgejo-v9.0.0 | [Link](https://github.com/minoplhy/deployment/releases/tag/forgejo-v9.0.0) |
 | forgejo-v8.0.3 | [Link](https://github.com/minoplhy/deployment/releases/tag/forgejo-v8.0.3) |
