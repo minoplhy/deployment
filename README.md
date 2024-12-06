@@ -18,6 +18,7 @@
 
 | RELEASE TAG | URL |
 |--------------|-----------------|
+| gitea-v1.22.4 | [Link](https://github.com/minoplhy/deployment/releases/tag/gitea-v1.22.4) |
 | gitea-v1.22.3 | [Link](https://github.com/minoplhy/deployment/releases/tag/gitea-v1.22.3) |
 | gitea-v1.22.2 | [Link](https://github.com/minoplhy/deployment/releases/tag/gitea-v1.22.2) |
 | gitea-v1.22.1 | [Link](https://github.com/minoplhy/deployment/releases/tag/gitea-v1.22.1) |
