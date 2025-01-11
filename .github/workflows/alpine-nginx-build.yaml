@@ -43,18 +43,6 @@ jobs:
           
             # Prepare tar file paths
             HOMEDIRECTORY=~/nginx_scriptbox
-            TAR_PATH="$HOMEDIRECTORY/nginx/objs" # Base Path
-            case "${TAGS[$i]}" in
-              "allstar")
-                TAR_PATH="$TAR_PATH /opt/nginx-lua-module /usr/local/lua /usr/local/modsecurity"
-                ;;
-              "lua")
-                TAR_PATH="$TAR_PATH /opt/nginx-lua-module /usr/local/lua"
-                ;;
-              "modsecurity")
-                TAR_PATH="$TAR_PATH /usr/local/modsecurity"
-                ;;
-            esac
             
             # Create the tarball
             tar czvf alpine-nginx-${NGINX_TAG}-${TAGS[$i]}.tar.gz $TAR_PATH
