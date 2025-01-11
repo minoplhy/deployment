@@ -62,7 +62,7 @@ jobs:
             # Create the tarball
             tar czvf alpine-nginx-${NGINX_TAG}-${TAGS[$i]}.tar.gz $TAR_PATH
           done
-        shell: alpine.sh --root /bin/bash -l {0}
+        shell: alpine.sh --root {0}
 
       - name: Release
         uses: softprops/action-gh-release@v2
