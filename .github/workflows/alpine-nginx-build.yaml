@@ -60,8 +60,8 @@ jobs:
             # Create the tarball
             tar czvf alpine-nginx-${NGINX_TAG}-${TAGS[$i]}.tar.gz $TAR_PATH
           done
-        shell: alpine.sh {0}
-          
+        shell: alpine.sh --root {0}
+
       - name: Release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
