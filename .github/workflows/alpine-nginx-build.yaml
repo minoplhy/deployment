@@ -30,9 +30,10 @@ jobs:
 
       - name: Run nginx Builds
         run: |
-          TAGS=("vanilla")
+          TAGS=("vanilla" "lua")
           OPTIONS=(
             "--type=nginx"
+            "--lua --type=nginx"
           )
 
           for i in ${!TAGS[@]}; do
