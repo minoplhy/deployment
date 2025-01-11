@@ -1,0 +1,72 @@
+name: nginx Mega Build
+run-name: nginx Build
+on:
+  push:
+    tags:        
+      - alpine-nginx-*
+jobs:
+  build_nginx:
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup latest Alpine Linux
+        uses: jirutka/setup-alpine@v1
+
+      - name: Run script inside Alpine chroot as root
+        run: |
+          apk add curl bash
+        shell: alpine.sh --root {0}
+
+      - name: Set up environment variables
+        run: |
+          TAG_NAME=${GITHUB_REF##*/}
+          NGINX_TAG=${TAG_NAME#alpine-nginx-}
+          
+          echo "NGINX_TAG=${NGINX_TAG}" >> $GITHUB_ENV
+          echo "NGINX_TAG=${NGINX_TAG}"
+        shell: alpine.sh {0}
+
+      - name: Run nginx Builds
+        run: |
+          TAGS=("vanilla")
+          OPTIONS=(
+            "--type=nginx"
+          )
+
+          for i in ${!TAGS[@]}; do
+            echo "This Task will be run using the following tag: ${NGINX_TAG}"
+            echo "This Task will be run using the following version: ${TAGS[$i]}"
+            echo "This Task will be run using the following options: ${OPTIONS[$i]}"
+            
+            curl https://raw.githubusercontent.com/minoplhy/scriptbox/main/nginx_build_script/build.sh | bash -s -- --nginx-tag=${NGINX_TAG} ${OPTIONS[$i]}
+          
+            # Prepare tar file paths
+            HOMEDIRECTORY=~/nginx_scriptbox
+            TAR_PATH="$HOMEDIRECTORY/nginx/objs" # Base Path
+            case "${TAGS[$i]}" in
+              "allstar")
+                TAR_PATH="$TAR_PATH /opt/nginx-lua-module /usr/local/lua /usr/local/modsecurity"
+                ;;
+              "lua")
+                TAR_PATH="$TAR_PATH /opt/nginx-lua-module /usr/local/lua"
+                ;;
+              "modsecurity")
+                TAR_PATH="$TAR_PATH /usr/local/modsecurity"
+                ;;
+            esac
+            
+            # Create the tarball
+            tar czvf alpine-nginx-${NGINX_TAG}-${TAGS[$i]}.tar.gz $TAR_PATH
+          done
+        shell: alpine.sh {0}
+          
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          body: |
+            "nginx Successfully build on -> ${{ env.NGINX_TAG }}"
+          token: ${{ secrets.DEPLOYMENT_TOKEN }}
+          files: nginx-*.tar.gz
