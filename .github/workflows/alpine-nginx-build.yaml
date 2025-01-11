@@ -31,11 +31,8 @@ jobs:
       - name: Run nginx Builds
         run: |
           echo "${NGINX_TAG}"
-          TAGS=("vanilla" "lua")
-          OPTIONS=(
-            "--type=nginx"
-            "--lua --type=nginx"
-          )
+          TAGS="vanilla"
+          OPTIONS="--type=nginx"
 
           for i in ${!TAGS[@]}; do
             echo "This Task will be run using the following tag: ${NGINX_TAG}"
