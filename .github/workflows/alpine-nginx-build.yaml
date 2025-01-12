@@ -4,7 +4,6 @@ on:
   push:
     tags:        
       - alpine-nginx-*
-  workflow_dispatch:
 jobs:
   build_nginx:
     runs-on: [ubuntu-latest]
@@ -25,8 +24,7 @@ jobs:
           TAG_NAME=${GITHUB_REF##*/}
           NGINX_TAG=${TAG_NAME#alpine-nginx-}
           
-          #echo "NGINX_TAG=${NGINX_TAG}" >> $GITHUB_ENV
-          echo "NGINX_TAG=release-1.27.3" >> $GITHUB_ENV
+          echo "NGINX_TAG=${NGINX_TAG}" >> $GITHUB_ENV
           echo "NGINX_TAG=${NGINX_TAG}"
         shell: alpine.sh {0}
 
@@ -52,7 +50,7 @@ jobs:
             echo "pre-TARing infoiirmation:"
             echo "TAR path: ${TAR_PATH}"
             echo "TAR name: alpine-nginx-${NGINX_TAG}-${TAGS[$i]}.tar.gz"
-            tar czvf alpine-nginx-${NGINX_TAG}-${TAGS[$i]}.tar.gz $TAR_PATH
+            tar czvf ~/alpine-nginx-${NGINX_TAG}-${TAGS[$i]}.tar.gz $TAR_PATH
           done'
           echo "$build_sh" > build.sh
 
