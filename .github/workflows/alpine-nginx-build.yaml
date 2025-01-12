@@ -4,6 +4,7 @@ on:
   push:
     tags:        
       - alpine-nginx-*
+  workflow_dispatch:
 jobs:
   build_nginx:
     runs-on: [ubuntu-latest]
@@ -24,12 +25,14 @@ jobs:
           TAG_NAME=${GITHUB_REF##*/}
           NGINX_TAG=${TAG_NAME#alpine-nginx-}
           
-          echo "NGINX_TAG=${NGINX_TAG}" >> $GITHUB_ENV
+          #echo "NGINX_TAG=${NGINX_TAG}" >> $GITHUB_ENV
+          echo "NGINX_TAG=release-1.27.3" >> $GITHUB_ENV
           echo "NGINX_TAG=${NGINX_TAG}"
         shell: alpine.sh {0}
 
       - name: Run nginx Builds
         run: |
+          #!/bin/bash
           echo "${NGINX_TAG}"
           TAGS="vanilla"
           OPTIONS="--type=nginx"
