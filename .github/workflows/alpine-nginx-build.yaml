@@ -32,11 +32,8 @@ jobs:
 
       - name: Run nginx Builds
         run: |
-          #!/bin/bash
-          BASH=$(which bash)
-          $BASH -l
-          
-          echo "${NGINX_TAG}"
+          build_sh='echo "${NGINX_TAG}"
+
           TAGS="vanilla"
           OPTIONS="--type=nginx"
 
@@ -52,7 +49,10 @@ jobs:
             
             # Create the tarball
             tar czvf alpine-nginx-${NGINX_TAG}-${TAGS[$i]}.tar.gz $TAR_PATH
-          done
+          done'
+          echo "$build_sh" > build.sh
+
+          bash build.sh
         shell: alpine.sh --root {0}
 
       - name: Release
