@@ -4,6 +4,7 @@ on:
   push:
     tags:        
       - alpine-nginx-*
+  workflow_dispatch:
 jobs:
   build_nginx:
     runs-on: [ubuntu-latest]
@@ -31,9 +32,12 @@ jobs:
       - name: Run nginx Builds
         run: |
           build_sh='echo "${NGINX_TAG}"
-
           TAGS="vanilla"
           OPTIONS="--type=nginx"
+
+          RUNNING_PATH=$(pwd)
+          echo "RUNNING PATH: ${RUNNING_PATH}" # This output where in the system is running
+          echo "HOME PATH: ${HOME}"
 
           for i in ${!TAGS[@]}; do
             echo "This Task will be run using the following tag: ${NGINX_TAG}"
