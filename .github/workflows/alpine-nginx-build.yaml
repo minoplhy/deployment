@@ -46,6 +46,7 @@ jobs:
           
             # Prepare tar file paths
             HOMEDIRECTORY=~/nginx_scriptbox
+            TAR_PATH="$HOMEDIRECTORY/nginx/objs" # Base Path
             
             # Create the tarball
             echo "pre-TARing infoiirmation:"
