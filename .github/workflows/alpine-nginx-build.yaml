@@ -54,7 +54,7 @@ jobs:
             echo "pre-TARing infoiirmation:"
             echo "TAR path: ${TAR_PATH}"
             echo "TAR name: alpine-nginx-${NGINX_TAG}-${TAGS[$i]}.tar.gz"
-            tar czvf ~/alpine-nginx-${NGINX_TAG}-${TAGS[$i]}.tar.gz $TAR_PATH
+            tar czvf alpine-nginx-${NGINX_TAG}-${TAGS[$i]}.tar.gz $TAR_PATH
           done'
           echo "$build_sh" > build.sh
 
