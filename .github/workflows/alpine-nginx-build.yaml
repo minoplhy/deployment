@@ -17,7 +17,7 @@ jobs:
 
       - name: Run script inside Alpine chroot as root
         run: |
-          apk add curl bash
+          apk add curl bash bash-completion
         shell: alpine.sh --root {0}
 
       - name: Set up environment variables
@@ -33,6 +33,9 @@ jobs:
       - name: Run nginx Builds
         run: |
           #!/bin/bash
+          BASH=$(which bash)
+          $BASH -l
+          
           echo "${NGINX_TAG}"
           TAGS="vanilla"
           OPTIONS="--type=nginx"
@@ -42,7 +45,7 @@ jobs:
             echo "This Task will be run using the following version: ${TAGS[$i]}"
             echo "This Task will be run using the following options: ${OPTIONS[$i]}"
             
-            #curl https://raw.githubusercontent.com/minoplhy/scriptbox/main/nginx_build_script/build.sh | bash -s -- --nginx-tag=${NGINX_TAG} ${OPTIONS[$i]}
+            curl https://raw.githubusercontent.com/minoplhy/scriptbox/main/nginx_build_script/build.sh | bash -s -- --nginx-tag=${NGINX_TAG} ${OPTIONS[$i]}
           
             # Prepare tar file paths
             HOMEDIRECTORY=~/nginx_scriptbox
