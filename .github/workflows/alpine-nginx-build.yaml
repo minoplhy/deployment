@@ -32,8 +32,13 @@ jobs:
       - name: Run nginx Builds
         run: |
           build_sh='echo "${NGINX_TAG}"
-          TAGS="vanilla"
-          OPTIONS="--type=nginx"
+          TAGS=("vanilla" "allstar" "lua" "modsecurity")
+          OPTIONS=(
+            "--type=nginx"
+            "--lua --modsecurity --type=nginx"
+            "--lua --type=nginx"
+            "--modsecurity --type=nginx"
+          )
 
           RUNNING_PATH=$(pwd)
           echo "RUNNING PATH: ${RUNNING_PATH}" # This output where in the system is running
@@ -49,6 +54,17 @@ jobs:
             # Prepare tar file paths
             HOMEDIRECTORY=~/nginx_scriptbox
             TAR_PATH="$HOMEDIRECTORY/nginx/objs" # Base Path
+            case "${TAGS[$i]}" in
+              "allstar")
+                TAR_PATH="$TAR_PATH /opt/nginx-lua-module /usr/local/lua /usr/local/modsecurity"
+                ;;
+              "lua")
+                TAR_PATH="$TAR_PATH /opt/nginx-lua-module /usr/local/lua"
+                ;;
+              "modsecurity")
+                TAR_PATH="$TAR_PATH /usr/local/modsecurity"
+                ;;
+            esac
             
             # Create the tarball
             echo "pre-TARing infoiirmation:"
