@@ -35,9 +35,9 @@ jobs:
           TAGS=("vanilla" "allstar" "lua" "modsecurity")
           OPTIONS=(
             "--type=nginx"
-            "--lua --modsecurity --type=nginx"
-            "--lua --type=nginx"
-            "--modsecurity --type=nginx"
+            "--lua --modsecurity --type=nginx --modsecurity-prefix=/usr --lua-prefix=/usr/local/share/lua/5.1 --luajit2-prefix=/usr"
+            "--lua --type=nginx --preserve --lua-prefix=/usr/local/share/lua/5.1 --luajit2-prefix=/usr"
+            "--modsecurity --type=nginx --preserve --modsecurity-prefix=/usr"
           )
 
           RUNNING_PATH=$(pwd)
@@ -56,13 +56,13 @@ jobs:
             TAR_PATH="$HOMEDIRECTORY/nginx/objs" # Base Path
             case "${TAGS[$i]}" in
               "allstar")
-                TAR_PATH="$TAR_PATH /opt/nginx-lua-module /usr/local/lua /usr/local/modsecurity"
+                TAR_PATH="$TAR_PATH /usr/lib/libmodsecurity* /usr/lib/pkgconfig/modsecurity.* /usr/bin/luajit* /usr/include/luajit-2.1 /usr/lib/libluajit* /usr/lib/pkgconfig/luajit.* /usr/lib/lua /usr/share/lua*"
                 ;;
               "lua")
-                TAR_PATH="$TAR_PATH /opt/nginx-lua-module /usr/local/lua"
+                TAR_PATH="$TAR_PATH /usr/bin/luajit* /usr/include/luajit-2.1 /usr/lib/libluajit* /usr/lib/pkgconfig/luajit.* /usr/lib/lua /usr/share/lua*"
                 ;;
               "modsecurity")
-                TAR_PATH="$TAR_PATH /usr/local/modsecurity"
+                TAR_PATH="$TAR_PATH /usr/lib/libmodsecurity* /usr/lib/pkgconfig/modsecurity.*"
                 ;;
             esac
             
