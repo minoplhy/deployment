@@ -35,8 +35,8 @@ jobs:
           TAGS=("vanilla" "allstar" "lua" "modsecurity")
           OPTIONS=(
             "--type=nginx"
-            "--lua --modsecurity --type=nginx --modsecurity-prefix=/usr --lua-prefix=/usr/local/share/lua/5.1 --luajit2-prefix=/usr --ssl=quictls"
-            "--lua --type=nginx --preserve --lua-prefix=/usr/local/share/lua/5.1 --luajit2-prefix=/usr --ssl=quictls"
+            "--lua --modsecurity --type=nginx --modsecurity-prefix=/usr --lua-prefix=/usr/share/lua/5.1 --luajit2-prefix=/usr --ssl=quictls"
+            "--lua --type=nginx --preserve --lua-prefix=/usr/share/lua/5.1 --luajit2-prefix=/usr --ssl=quictls"
             "--modsecurity --type=nginx --preserve --modsecurity-prefix=/usr"
           )
 
